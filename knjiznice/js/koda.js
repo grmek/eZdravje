@@ -98,6 +98,9 @@ function generirajPodatke(stPacienta) {
 	            success: function (party) {
 	                if (party.action == 'CREATE') {
 	                    console.log("Uspesno generiran ehrId " + ehrId + ".");
+	                    for(var i=0; i<7; i++){
+							dodajMeritveVitalnihZnakov(sessionId, ehrId, datumInUra[i], sistolicniKrvniTlak[i], diastolicniKrvniTlak[i]);
+						}
 	                }
 	            },
 	            error: function(err) {
@@ -107,11 +110,6 @@ function generirajPodatke(stPacienta) {
 	        });
 	    }
 	});
-
-	//vnesi 7 meritev
-	for(var i=0; i<7; i++){
-		dodajMeritveVitalnihZnakov(sessionId, ehrId, datumInUra[i], sistolicniKrvniTlak[i], diastolicniKrvniTlak[i]);
-	}
 	
 	return ehrId;
 }
@@ -136,6 +134,7 @@ function dodajMeritveVitalnihZnakov(sessionId, ehrId, datumInUra, sistolicniKrvn
 	$.ajax({
 	    url: baseUrl + "/composition?" + $.param(parametriZahteve),
 	    type: 'POST',
+	    async: false,
 	    contentType: 'application/json',
 	    data: JSON.stringify(podatki),
 	    success: function (res) {
@@ -151,4 +150,75 @@ function generirajVsePodatke() {
     var ehrId1 = generirajPodatke(1);
     var ehrId2 = generirajPodatke(2);
     var ehrId3 = generirajPodatke(3);
+    $('#vzorcneOsebe').replaceWith('<select class="form-control input-sm" id="vzorcneOsebe"></select>');
+    $('#vzorcneOsebe').append('<option value="'+ehrId1+'">POPRAVI IME</option>\
+    						   <option value="'+ehrId2+'">Janez Novak</option>\
+    						   <option value="'+ehrId3+'">Janez Novak</option>');
+    $('#ehrId').val(ehrId1);
 }
+
+function prikaziPodatke() {
+	var meritve = preberiMeritve(getSessionId(), $('#ehrId').val());
+	var list = "";
+	for(var i in meritve){
+		list += '<option value="'+meritve[i].diastolic+';'+meritve[i].systolic+'">'+meritve[i].time+'</option>';
+	}
+	$('#meritevZaDatum').replaceWith('\
+	<div class="row" id="meritevZaDatum">\
+		<div class="panel panel-default">\
+			<div class="panel-heading">\
+				<div class="row">\
+					<div class="col-lg-8 col-md-8 col-sm-8"><b>Izberite datum</b> za prikaz meritve</div>\
+				</div>\
+			</div>\
+			<div class="panel-body">\
+				<span class="label label-default">Datum in ura</span>\
+				<select class="form-control input-sm" id="izberiDatum">'+list+'</select>\
+   	    		<div class="row-lg-8 row-md-8 row-sm-8" id="meritev"><br>\
+   	    		Diastolični tlak: '+meritve[0].diastolic+'<br>\
+   	    		Sistolični tlak: '+meritve[0].systolic+'</div>\
+			</div>\
+		</div>\
+	</div>');
+	$('#analiza').replaceWith('\
+	<div class="row" id="analiza">\
+		<div class="panel panel-default">\
+			<div class="panel-heading">\
+				<div class="row">\
+					<div class="col-lg-8 col-md-8 col-sm-8"><b>Analiza zadnjih meritev</b></div>\
+				</div>\
+			</div>\
+			<div class="panel-body">\
+				<!-- DODAJ ANALIZO -->\
+			</div>\
+		</div>\
+	</div>');
+}
+
+function preberiMeritve(sessionId, ehrId) {
+	var meritve;
+	$.ajax({
+		url: baseUrl + "/view/" + ehrId + "/blood_pressure",
+		type: 'GET',
+		async: false,
+		headers: {"Ehr-Session": sessionId},
+		success: function (res) {
+	    	for (var i in res) {
+				meritve = res;
+			}
+		}
+	});
+	return meritve;
+}
+
+$(document).ready(function() {
+	
+	$('#vzorcneOsebe').change(function() {
+		console.log("sprememba");
+	});
+	
+	$('#izberiDatum').change(function() {
+		console.log("sprememba");
+	});
+	
+});
