@@ -15,7 +15,7 @@ function getSessionId() {
     var response = $.ajax({
         type: "POST",
         url: baseUrl + "/session?username=" + encodeURIComponent(username) +
-                "&password=" + encodeURIComponent(password),
+             "&password=" + encodeURIComponent(password),
         async: false
     });
     return response.responseJSON.sessionId;
@@ -31,119 +31,119 @@ function getSessionId() {
  * @return ehrId generiranega pacienta
  */
 function generirajPodatke(stPacienta) {
-	var sessionId = getSessionId();
-	var ehrId, ime, priimek, datumRojstva, datumInUra, sistolicniKrvniTlak, diastolicniKrvniTlak;
-	
-	//nastavi podatke glede na 'stPacienta'
-	switch(stPacienta) {
+    var sessionId = getSessionId();
+    var ehrId, ime, priimek, datumRojstva, datumInUra, sistolicniKrvniTlak, diastolicniKrvniTlak;
+
+    //nastavi podatke glede na 'stPacienta'
+    switch(stPacienta) {
         case 1:
             ime = "Janez";
-			priimek = "Novak";
-			datumRojstva = "1944-11-22T11:21";
-			datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
-						   "1998-10-30T14:58", "1998-10-30T15:09",
-						   "1998-10-30T15:10", "1998-10-30T15:11",
-						   "1998-10-30T15:12" ];
-			sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
-			diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
-			break;
+            priimek = "Novak";
+            datumRojstva = "1944-11-22T11:21";
+            datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
+                           "1998-10-30T14:58", "1998-10-30T15:09",
+                           "1998-10-30T15:10", "1998-10-30T15:11",
+                           "1998-10-30T15:12" ];
+            sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
+            diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
+            break;
         case 2:
             ime = "Janez";
-			priimek = "Novak";
-			datumRojstva = "1944-11-22T11:21";
-			datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
-						   "1998-10-30T14:58", "1998-10-30T15:09",
-						   "1998-10-30T15:10", "1998-10-30T15:11",
-						   "1998-10-30T15:12" ];
-			sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
-			diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
-			break;
+            priimek = "Novak";
+            datumRojstva = "1944-11-22T11:21";
+            datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
+                           "1998-10-30T14:58", "1998-10-30T15:09",
+                           "1998-10-30T15:10", "1998-10-30T15:11",
+                           "1998-10-30T15:12" ];
+            sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
+            diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
+            break;
         case 3:
             ime = "Janez";
-			priimek = "Novak";
-			datumRojstva = "1944-11-22T11:21";
-			datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
-						   "1998-10-30T14:58", "1998-10-30T15:09",
-						   "1998-10-30T15:10", "1998-10-30T15:11",
-						   "1998-10-30T15:12" ];
-			sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
-			diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
-			break;
-		default:
-			console.log("Napacna stPacienta");
-			return "";
-	}
-	
-	//generiraj ehrId z zgornjimi podatki (ime, priimek, datumRojstva)
-	$.ajaxSetup({
-	    headers: {"Ehr-Session": sessionId}
-	});
-	$.ajax({
-	    url: baseUrl + "/ehr",
-	    type: 'POST',
-	    async: false,
-	    success: function (data) {
-	        ehrId = data.ehrId;
-	        var partyData = {
-	            firstNames: ime,
-	            lastNames: priimek,
-	            dateOfBirth: datumRojstva,
-	            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
-	        };
-	        $.ajax({
-	            url: baseUrl + "/demographics/party",
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(partyData),
-	            success: function (party) {
-	                if (party.action == 'CREATE') {
-	                    console.log("Uspesno generiran ehrId " + ehrId + ".");
-	                    for(var i=0; i<7; i++){
-							dodajMeritveVitalnihZnakov(sessionId, ehrId, datumInUra[i], sistolicniKrvniTlak[i], diastolicniKrvniTlak[i]);
-						}
-	                }
-	            },
-	            error: function(err) {
-					ehrId = "";
-					console.log("Napaka pri generiranju ehrId-ja.");
-	            }
-	        });
-	    }
-	});
-	
-	return ehrId;
+            priimek = "Novak";
+            datumRojstva = "1944-11-22T11:21";
+            datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
+                           "1998-10-30T14:58", "1998-10-30T15:09",
+                           "1998-10-30T15:10", "1998-10-30T15:11",
+                           "1998-10-30T15:12" ];
+            sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
+            diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
+            break;
+        default:
+            console.log("Napacna stPacienta");
+            return "";
+    }
+
+    //generiraj ehrId z zgornjimi podatki (ime, priimek, datumRojstva)
+    $.ajaxSetup({
+        headers: {"Ehr-Session": sessionId}
+    });
+    $.ajax({
+        url: baseUrl + "/ehr",
+        type: 'POST',
+        async: false,
+        success: function (data) {
+            ehrId = data.ehrId;
+            var partyData = {
+                firstNames: ime,
+                lastNames: priimek,
+                dateOfBirth: datumRojstva,
+                partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+            };
+            $.ajax({
+                url: baseUrl + "/demographics/party",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(partyData),
+                success: function (party) {
+                    if (party.action == 'CREATE') {
+                        console.log("Uspesno generiran ehrId " + ehrId + ".");
+                        for(var i=0; i<7; i++){
+                            dodajMeritveVitalnihZnakov(sessionId, ehrId, datumInUra[i], sistolicniKrvniTlak[i], diastolicniKrvniTlak[i]);
+                        }
+                    }
+                },
+                error: function(err) {
+                    ehrId = "";
+                    console.log("Napaka pri generiranju ehrId-ja.");
+                }
+            });
+        }
+    });
+
+    return ehrId;
 }
 
 function dodajMeritveVitalnihZnakov(sessionId, ehrId, datumInUra, sistolicniKrvniTlak, diastolicniKrvniTlak) {
-	$.ajaxSetup({
-	    headers: {"Ehr-Session": sessionId}
-	});
-	var podatki = {
-	    "ctx/language": "en",
-	    "ctx/territory": "SI",
-	    "ctx/time": datumInUra,
-	    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
-	    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak
-	};
-	var parametriZahteve = {
-	    ehrId: ehrId,
-	    templateId: 'Vital Signs',
-	    format: 'FLAT',
-	    committer: 'Generator'
-	};
-	$.ajax({
-	    url: baseUrl + "/composition?" + $.param(parametriZahteve),
-	    type: 'POST',
-	    async: false,
-	    contentType: 'application/json',
-	    data: JSON.stringify(podatki),
-	    success: function (res) {
-	        console.log("Uspesno dodana meritev.");
-	    },
-		error: function(err) {
-			console.log("Napaka pri dodajanju meritve");
-		}
-	});
+    $.ajaxSetup({
+        headers: {"Ehr-Session": sessionId}
+    });
+    var podatki = {
+        "ctx/language": "en",
+        "ctx/territory": "SI",
+        "ctx/time": datumInUra,
+        "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
+        "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak
+    };
+    var parametriZahteve = {
+        ehrId: ehrId,
+        templateId: 'Vital Signs',
+        format: 'FLAT',
+        committer: 'Generator'
+    };
+    $.ajax({
+        url: baseUrl + "/composition?" + $.param(parametriZahteve),
+        type: 'POST',
+        async: false,
+        contentType: 'application/json',
+        data: JSON.stringify(podatki),
+        success: function (res) {
+            console.log("Uspesno dodana meritev.");
+        },
+        error: function(err) {
+            console.log("Napaka pri dodajanju meritve");
+        }
+    });
 }
 
 function generirajVsePodatke() {
@@ -152,73 +152,75 @@ function generirajVsePodatke() {
     var ehrId3 = generirajPodatke(3);
     $('#vzorcneOsebe').replaceWith('<select class="form-control input-sm" id="vzorcneOsebe"></select>');
     $('#vzorcneOsebe').append('<option value="'+ehrId1+'">POPRAVI IME</option>\
-    						   <option value="'+ehrId2+'">Janez Novak</option>\
-    						   <option value="'+ehrId3+'">Janez Novak</option>');
+                               <option value="'+ehrId2+'">Janez Novak</option>\
+                               <option value="'+ehrId3+'">Janez Novak</option>');
     $('#ehrId').val(ehrId1);
 }
 
 function prikaziPodatke() {
-	var meritve = preberiMeritve(getSessionId(), $('#ehrId').val());
-	var list = "";
-	for(var i in meritve){
-		list += '<option value="'+meritve[i].diastolic+';'+meritve[i].systolic+'">'+meritve[i].time+'</option>';
-	}
-	$('#meritevZaDatum').replaceWith('\
-	<div class="row" id="meritevZaDatum">\
-		<div class="panel panel-default">\
-			<div class="panel-heading">\
-				<div class="row">\
-					<div class="col-lg-8 col-md-8 col-sm-8"><b>Izberite datum</b> za prikaz meritve</div>\
-				</div>\
-			</div>\
-			<div class="panel-body">\
-				<span class="label label-default">Datum in ura</span>\
-				<select class="form-control input-sm" id="izberiDatum">'+list+'</select>\
-   	    		<div class="row-lg-8 row-md-8 row-sm-8" id="meritev"><br>\
-   	    		Diastolični tlak: '+meritve[0].diastolic+'<br>\
-   	    		Sistolični tlak: '+meritve[0].systolic+'</div>\
-			</div>\
-		</div>\
-	</div>');
-	$('#analiza').replaceWith('\
-	<div class="row" id="analiza">\
-		<div class="panel panel-default">\
-			<div class="panel-heading">\
-				<div class="row">\
-					<div class="col-lg-8 col-md-8 col-sm-8"><b>Analiza zadnjih meritev</b></div>\
-				</div>\
-			</div>\
-			<div class="panel-body">\
-				<!-- DODAJ ANALIZO -->\
-			</div>\
-		</div>\
-	</div>');
+    var meritve = preberiMeritve(getSessionId(), $('#ehrId').val());
+    var list = "";
+    for(var i in meritve){
+        list += '<option value="'+meritve[i].diastolic+';'+meritve[i].systolic+'">'+meritve[i].time+'</option>';
+    }
+    $('#meritevZaDatum').replaceWith('\
+    <div class="row" id="meritevZaDatum">\
+        <div class="panel panel-default">\
+            <div class="panel-heading">\
+                <div class="row">\
+                    <div class="col-lg-8 col-md-8 col-sm-8"><b>Izberite datum</b> za prikaz meritve</div>\
+                </div>\
+            </div>\
+            <div class="panel-body">\
+                <span class="label label-default">Datum in ura</span>\
+                <select class="form-control input-sm" id="izberiDatum">'+list+'</select>\
+                <div class="row-lg-8 row-md-8 row-sm-8" id="meritev"><br>\
+                Diastolični tlak: '+meritve[0].diastolic+'<br>\
+                Sistolični tlak: '+meritve[0].systolic+'</div>\
+            </div>\
+        </div>\
+    </div>');
+    $('#analiza').replaceWith('\
+    <div class="row" id="analiza">\
+        <div class="panel panel-default">\
+            <div class="panel-heading">\
+                <div class="row">\
+                    <div class="col-lg-8 col-md-8 col-sm-8"><b>Analiza zadnjih meritev</b></div>\
+                </div>\
+            </div>\
+            <div class="panel-body">\
+                <!-- DODAJ ANALIZO -->\
+            </div>\
+        </div>\
+    </div>');
 }
 
 function preberiMeritve(sessionId, ehrId) {
-	var meritve;
-	$.ajax({
-		url: baseUrl + "/view/" + ehrId + "/blood_pressure",
-		type: 'GET',
-		async: false,
-		headers: {"Ehr-Session": sessionId},
-		success: function (res) {
-	    	for (var i in res) {
-				meritve = res;
-			}
-		}
-	});
-	return meritve;
+    var meritve;
+    $.ajax({
+        url: baseUrl + "/view/" + ehrId + "/blood_pressure",
+        type: 'GET',
+        async: false,
+        headers: {"Ehr-Session": sessionId},
+        success: function (res) {
+            for (var i in res) {
+                meritve = res;
+            }
+        }
+    });
+    return meritve;
 }
 
 $(document).ready(function() {
-	
-	$('#vzorcneOsebe').change(function() {
-		console.log("sprememba");
-	});
-	
-	$('#izberiDatum').change(function() {
-		console.log("sprememba");
-	});
-	
+
+    console.log( "document loaded" );
+
+    $('#vzorcneOsebe').change(function() {
+        console.log("sprememba");
+    });
+
+    $('#izberiDatum').change(function() {
+        console.log("sprememba");
+    });
+
 });
