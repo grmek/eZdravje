@@ -1,4 +1,3 @@
-
 var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 var queryUrl = baseUrl + '/query';
 
@@ -37,37 +36,37 @@ function generirajPodatke(stPacienta) {
     //nastavi podatke glede na 'stPacienta'
     switch(stPacienta) {
         case 1:
-            ime = "Janez";
-            priimek = "Novak";
-            datumRojstva = "1944-11-22T11:21";
-            datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
-                           "1998-10-30T14:58", "1998-10-30T15:09",
-                           "1998-10-30T15:10", "1998-10-30T15:11",
-                           "1998-10-30T15:12" ];
-            sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
-            diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
+            ime = "Jan";
+            priimek = "Čuk";
+            datumRojstva = "1996-07-08T09:21";
+            datumInUra = [ "2016-05-25T08:32", "2016-05-26T08:29",
+                           "2016-05-27T08:31", "2016-05-28T08:23",
+                           "2016-05-29T08:33", "2016-05-30T08:27",
+                           "2016-05-31T08:28" ];
+            sistolicniKrvniTlak = [ 143, 146, 147, 141, 144, 145, 139 ];
+            diastolicniKrvniTlak = [ 92, 89, 95, 91, 93, 96, 92 ];
             break;
         case 2:
-            ime = "Janez";
-            priimek = "Novak";
-            datumRojstva = "1944-11-22T11:21";
-            datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
-                           "1998-10-30T14:58", "1998-10-30T15:09",
-                           "1998-10-30T15:10", "1998-10-30T15:11",
-                           "1998-10-30T15:12" ];
-            sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
-            diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
+            ime = "Erik";
+            priimek = "Bolčič";
+            datumRojstva = "1996-11-22T11:21";
+            datumInUra = [ "2016-05-25T08:32", "2016-05-26T08:29",
+                           "2016-05-27T08:31", "2016-05-28T08:23",
+                           "2016-05-29T08:33", "2016-05-30T08:27",
+                           "2016-05-31T08:28" ];
+            sistolicniKrvniTlak = [ 109, 112, 108, 110, 104, 113, 106 ];
+            diastolicniKrvniTlak = [ 63, 64, 66, 64, 65, 63, 61 ];
             break;
         case 3:
-            ime = "Janez";
-            priimek = "Novak";
-            datumRojstva = "1944-11-22T11:21";
-            datumInUra = [ "1998-10-30T14:43", "1998-10-30T14:55",
-                           "1998-10-30T14:58", "1998-10-30T15:09",
-                           "1998-10-30T15:10", "1998-10-30T15:11",
-                           "1998-10-30T15:12" ];
-            sistolicniKrvniTlak = [ 131, 132, 133, 134, 135, 136, 137 ];
-            diastolicniKrvniTlak = [ 81, 82, 83, 84, 85, 86, 87 ];
+            ime = "Luka";
+            priimek = "Benčina";
+            datumRojstva = "1996-01-12T17:43";
+            datumInUra = [ "2016-05-25T08:32", "2016-05-26T08:29",
+                           "2016-05-27T08:31", "2016-05-28T08:23",
+                           "2016-05-29T08:33", "2016-05-30T08:27",
+                           "2016-05-31T08:28" ];
+            sistolicniKrvniTlak = [ 91, 89, 87, 85, 86, 88, 90 ];
+            diastolicniKrvniTlak = [ 55, 57, 53, 54, 59, 58, 54 ];
             break;
         default:
             console.log("Napacna stPacienta");
@@ -150,28 +149,86 @@ function generirajVsePodatke() {
     var ehrId1 = generirajPodatke(1);
     var ehrId2 = generirajPodatke(2);
     var ehrId3 = generirajPodatke(3);
-    $('#vzorcneOsebe').html('');
-    $('#vzorcneOsebe').append('<option value="'+ehrId1+'">POPRAVI IME</option>\
-                               <option value="'+ehrId2+'">Janez Novak</option>\
-                               <option value="'+ehrId3+'">Janez Novak</option>');
+    $('#vzorcneOsebe').html('<option value=""></option>\
+                             <option value="'+ehrId1+'">Jan Čuk</option>\
+                             <option value="'+ehrId2+'">Erik Bolčič</option>\
+                             <option value="'+ehrId3+'">Luka Benčina</option>');
     $('#ehrId').val(ehrId1);
+    alert("Vzorčne osebe uspešno generirane!");
 }
 
 function prikaziPodatke() {
-    var meritve = preberiMeritve(getSessionId(), $('#ehrId').val());
-    var list = "";
-    for(var i in meritve){
-        list += '<option value="'+meritve[i].diastolic+';'+meritve[i].systolic+'">'+meritve[i].time+'</option>';
+    var ehrId = $('#ehrId').val();
+
+    if(ehrId!=""){
+        var meritve = preberiMeritve(getSessionId(), ehrId);
+
+        //dodaj vse meritve na seznam z datumi
+        var list = "";
+        for(var i in meritve){
+            list += '<option value="'+meritve[i].diastolic+';'+meritve[i].systolic+'">'+meritve[i].time+'</option>';
+        }
+        $('#meritevZaDatum').css("display", "block");
+        $('#izberiDatum').html(list);
+        $('#meritev').html('<br>Diastolični krvni tlak: '+meritve[0].diastolic+
+                           '<br>Sistolični krvni tlak: '+meritve[0].systolic);
+
+        //pripravi podatke za graf  in izracunaj povprecna tlaka
+        var len = meritve.length;
+        if(len>5){
+            len = 5;
+        }
+        var podatki = [ ['', ''] ];
+        var avgSys = 0;
+        var avgDia = 0;
+        for(var i=0; i<len; i++){
+            podatki.push( [meritve[i].systolic, meritve[i].diastolic] );
+            avgSys += meritve[i].systolic;
+            avgDia += meritve[i].diastolic;
+        }
+        avgSys /= len;
+        avgDia /= len;
+
+        //prikazi analizo
+        $('#analiza').css("display", "block");
+
+        //narisi graf
+        drawChart(podatki);
+
+        //izpisi povprecje
+        $('#povprecje').html('Povprečje za zadnjih '+len+' meritev'+
+                             '<br>Diastolični krvni tlak: '+avgDia+
+                             '<br>Sistolični krvni tlak: '+avgSys);
+
+        //pripravi in izpisi povzetek
+        var opis;
+        if(avgSys>140 || avgDia>90) {
+            opis = 'previsok';
+        } else if(avgSys>120 || avgDia>80) {
+            opis = 'rahlo povišan';
+        } else if(avgSys>90 || avgDia>60) {
+            opis = 'idealen';
+        } else {
+            opis = 'prenizek';
+        }
+        $('#povzetek').html('<b>Vaš krvni tlak je '+opis+'.</b><br>');
+
+        //ce je potrebno, dodaj nasvet iz zunanjega vira
+        if(opis=='previsok' || opis=='rahlo povišan'){
+            var data = preberiCSV("zunanji_vir/previsok.csv");
+            var random = Math.floor(Math.random() * data.length);
+            $('#povzetek').append('<br>Nasvet: <b>'+data[random][0]+'</b><br>'+
+                                   data[random][1]+'<br>');
+        }
+        if(opis=='prenizek'){
+            var data = preberiCSV("zunanji_vir/prenizek.csv");
+            var random = Math.floor(Math.random() * data.length);
+            $('#povzetek').append('<br>Nasvet: <b>'+data[random][0]+'</b><br>'+
+                                   data[random][1]+'<br>');
+        }
+
     }
 
-    $('#meritevZaDatum').css("display", "block");
-    $('#izberiDatum').append(list);
-    $('#meritev').html('<br>Diastolični krvni tlak: '+meritve[0].diastolic+
-                       '<br>Sistolični krvni tlak: '+meritve[0].systolic);
-
-
-    $('#analiza').css("display", "block");
-    
 }
 
 function preberiMeritve(sessionId, ehrId) {
@@ -190,9 +247,24 @@ function preberiMeritve(sessionId, ehrId) {
     return meritve;
 }
 
-$(document).ready(function() {
+function preberiCSV(path) {
+    var data;
+    $.ajax({
+        url: path,
+        async: false,
+        success: function (csvd) {
+            data = csvd;
+        },
+        dataType: "text",
+    });
+    data = data.split(/\r\n|\n/);
+    for(var i in data){
+        data[i] = data[i].split(';');
+    }
+    return data;
+}
 
-    console.log( "document loaded" );
+$(document).ready(function() {
 
     $('#vzorcneOsebe').change(function() {
         $('#ehrId').val($(this).val());
@@ -205,3 +277,4 @@ $(document).ready(function() {
     });
 
 });
+

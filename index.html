@@ -10,6 +10,8 @@
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="knjiznice/js/chart.js"></script>
 </head>
 <body>
 
@@ -37,7 +39,7 @@
   <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
 
   <!-- ZAČETEK: Vsebina aplikacije -->
-  <div class="container">
+  <div class="container" style="width: 700px;">
 
     <div class="row">
       <div class="panel panel-default">
@@ -47,10 +49,15 @@
           </div>
         </div>
         <div class="panel-body">
-          <span class="label label-default">Izberite vzorčno osebo iz seznama (pred tem kliknite na 'Generiranje podatkov')</span>
-          <select class="form-control input-sm" id="vzorcneOsebe"><option value=""></option></select>
+          <span class="label label-default">Izberite vzorčno osebo iz seznama (če osebe ne obstajajo, kliknite na 'Generiranje podatkov')</span>
+          <select class="form-control input-sm" id="vzorcneOsebe">
+            <option value=""></option>
+            <option value="a9fb5b65-359f-447f-a242-b74cad0b36ea">Jan Čuk</option>
+            <option value="b6a423cb-18d6-4489-b3ae-17d49a160252">Erik Bolčič</option>
+            <option value="e6d4e58d-0576-4f2f-b854-bf088b45a717">Luka Benčina</option>
+          </select>
           <span class="label label-default">EHR ID</span><input id="ehrId" type="text" class="form-control input-mini">
-          <button type="button" class="btn btn-primary btn-xs" onclick="prikaziPodatke()">Prikazi podatke</button><span id="kreirajSporocilo"></span>
+          <button type="button" class="btn btn-primary btn-xs" onclick="prikaziPodatke()">Prikaži podatke</button><span id="kreirajSporocilo"></span>
         </div>
       </div>
     </div>
@@ -78,11 +85,12 @@
           </div>
         </div>
         <div class="panel-body">
-          <!-- DODAJ ANALIZO -->
+          <div id="chart_div" style="width: 600px; height: 390px; margin-left: 50px; background: url(img/background.png) no-repeat;"></div>
+          <div class="row-lg-8 row-md-8 row-sm-8" id="povprecje"></div>
+          <div class="row-lg-8 row-md-8 row-sm-8" id="povzetek"></div>
         </div>
       </div>
     </div>
-
   </div>
   <!-- KONEC: Vsebina aplikacije -->
 
