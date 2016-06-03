@@ -150,7 +150,7 @@ function generirajVsePodatke() {
     var ehrId1 = generirajPodatke(1);
     var ehrId2 = generirajPodatke(2);
     var ehrId3 = generirajPodatke(3);
-    $('#vzorcneOsebe').replaceWith('<select class="form-control input-sm" id="vzorcneOsebe"></select>');
+    $('#vzorcneOsebe').html('');
     $('#vzorcneOsebe').append('<option value="'+ehrId1+'">POPRAVI IME</option>\
                                <option value="'+ehrId2+'">Janez Novak</option>\
                                <option value="'+ehrId3+'">Janez Novak</option>');
@@ -163,36 +163,15 @@ function prikaziPodatke() {
     for(var i in meritve){
         list += '<option value="'+meritve[i].diastolic+';'+meritve[i].systolic+'">'+meritve[i].time+'</option>';
     }
-    $('#meritevZaDatum').replaceWith('\
-    <div class="row" id="meritevZaDatum">\
-        <div class="panel panel-default">\
-            <div class="panel-heading">\
-                <div class="row">\
-                    <div class="col-lg-8 col-md-8 col-sm-8"><b>Izberite datum</b> za prikaz meritve</div>\
-                </div>\
-            </div>\
-            <div class="panel-body">\
-                <span class="label label-default">Datum in ura</span>\
-                <select class="form-control input-sm" id="izberiDatum">'+list+'</select>\
-                <div class="row-lg-8 row-md-8 row-sm-8" id="meritev"><br>\
-                Diastolični tlak: '+meritve[0].diastolic+'<br>\
-                Sistolični tlak: '+meritve[0].systolic+'</div>\
-            </div>\
-        </div>\
-    </div>');
-    $('#analiza').replaceWith('\
-    <div class="row" id="analiza">\
-        <div class="panel panel-default">\
-            <div class="panel-heading">\
-                <div class="row">\
-                    <div class="col-lg-8 col-md-8 col-sm-8"><b>Analiza zadnjih meritev</b></div>\
-                </div>\
-            </div>\
-            <div class="panel-body">\
-                <!-- DODAJ ANALIZO -->\
-            </div>\
-        </div>\
-    </div>');
+
+    $('#meritevZaDatum').css("display", "block");
+    $('#izberiDatum').append(list);
+    $('#meritev').html('<br>Diastolični krvni tlak: '+meritve[0].diastolic+
+                       '<br>Sistolični krvni tlak: '+meritve[0].systolic);
+
+
+    $('#analiza').css("display", "block");
+    
 }
 
 function preberiMeritve(sessionId, ehrId) {
@@ -216,11 +195,13 @@ $(document).ready(function() {
     console.log( "document loaded" );
 
     $('#vzorcneOsebe').change(function() {
-        console.log("sprememba");
+        $('#ehrId').val($(this).val());
     });
 
     $('#izberiDatum').change(function() {
-        console.log("sprememba");
+        var tlak = $(this).val().split(';');
+        $('#meritev').html('<br>Diastolični krvni tlak: '+tlak[0]+
+                           '<br>Sistolični krvni tlak: '+tlak[1]);
     });
 
 });

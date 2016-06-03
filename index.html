@@ -38,6 +38,7 @@
 
   <!-- ZAČETEK: Vsebina aplikacije -->
   <div class="container">
+
     <div class="row">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -53,8 +54,35 @@
         </div>
       </div>
     </div>
-    <div class="row" id="meritevZaDatum"></div>
-    <div class="row" id="analiza"></div>
+
+    <div class="row" id="meritevZaDatum" style="display: none;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8"><b>Izberite datum</b> za prikaz meritve</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <span class="label label-default">Datum in ura</span>
+          <select class="form-control input-sm" id="izberiDatum"></select>
+          <div class="row-lg-8 row-md-8 row-sm-8" id="meritev"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="analiza" style="display: none;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8"><b>Analiza zadnjih meritev</b></div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <!-- DODAJ ANALIZO -->
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- KONEC: Vsebina aplikacije -->
 
