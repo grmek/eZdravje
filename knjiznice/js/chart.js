@@ -13,8 +13,8 @@ function drawChart(podatki) {
     var data = google.visualization.arrayToDataTable(podatki);
     var options = {
         title: '',
-        hAxis: {title: 'Sistolični tlak', minValue: 0, maxValue: 200, gridlines: {count: 21, color: 'white'}},
-        vAxis: {title: 'Diastolični tlak', minValue: 0, maxValue: 130, gridlines: {count: 14, color: 'white'}},
+        hAxis: {title: 'Sistolični tlak [mm Hg]', minValue: 0, maxValue: 200, gridlines: {count: 21, color: 'white'}},
+        vAxis: {title: 'Diastolični tlak [mm Hg]', minValue: 0, maxValue: 130, gridlines: {count: 14, color: 'white'}},
         legend: 'none',
         chartArea: {left:90, top:25, width:420, height:273},
         backgroundColor: 'none'

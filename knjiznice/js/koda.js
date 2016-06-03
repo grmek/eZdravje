@@ -153,7 +153,7 @@ function generirajVsePodatke() {
                              <option value="'+ehrId1+'">Jan Čuk</option>\
                              <option value="'+ehrId2+'">Erik Bolčič</option>\
                              <option value="'+ehrId3+'">Luka Benčina</option>');
-    $('#ehrId').val(ehrId1);
+    $('#ehrId').val('');
     alert("Vzorčne osebe uspešno generirane!");
 }
 
@@ -170,8 +170,8 @@ function prikaziPodatke() {
         }
         $('#meritevZaDatum').css("display", "block");
         $('#izberiDatum').html(list);
-        $('#meritev').html('<br>Diastolični krvni tlak: '+meritve[0].diastolic+
-                           '<br>Sistolični krvni tlak: '+meritve[0].systolic);
+        $('#meritev').html('<br>Diastolični krvni tlak: '+meritve[0].diastolic+' mm Hg'+
+                           '<br>Sistolični krvni tlak: '+meritve[0].systolic+' mm Hg');
 
         //pripravi podatke za graf  in izracunaj povprecna tlaka
         var len = meritve.length;
@@ -197,8 +197,8 @@ function prikaziPodatke() {
 
         //izpisi povprecje
         $('#povprecje').html('Povprečje za zadnjih '+len+' meritev'+
-                             '<br>Diastolični krvni tlak: '+avgDia+
-                             '<br>Sistolični krvni tlak: '+avgSys);
+                             '<br>Diastolični krvni tlak: '+avgDia+' mm Hg'+
+                             '<br>Sistolični krvni tlak: '+avgSys+' mm Hg');
 
         //pripravi in izpisi povzetek
         var opis;
@@ -211,21 +211,21 @@ function prikaziPodatke() {
         } else {
             opis = 'prenizek';
         }
-        $('#povzetek').html('<b>Vaš krvni tlak je '+opis+'.</b><br>');
+        var povzetek = '<b>Vaš krvni tlak je '+opis+'.</b><br>';
 
         //ce je potrebno, dodaj nasvet iz zunanjega vira
         if(opis=='previsok' || opis=='rahlo povišan'){
             var data = preberiCSV("zunanji_vir/previsok.csv");
             var random = Math.floor(Math.random() * data.length);
-            $('#povzetek').append('<br>Nasvet: <b>'+data[random][0]+'</b><br>'+
-                                   data[random][1]+'<br>');
+            povzetek += '<br>Nasvet: <b>'+data[random][0]+'</b><br>'+data[random][1]+'<br>';
         }
         if(opis=='prenizek'){
             var data = preberiCSV("zunanji_vir/prenizek.csv");
             var random = Math.floor(Math.random() * data.length);
-            $('#povzetek').append('<br>Nasvet: <b>'+data[random][0]+'</b><br>'+
-                                   data[random][1]+'<br>');
+            povzetek += '<br>Nasvet: <b>'+data[random][0]+'</b><br>'+data[random][1]+'<br>';
         }
+
+        $('#povzetek').html(povzetek);
 
     }
 
@@ -266,14 +266,16 @@ function preberiCSV(path) {
 
 $(document).ready(function() {
 
+    //sprememba osebe naj zamenja ehrId
     $('#vzorcneOsebe').change(function() {
         $('#ehrId').val($(this).val());
     });
 
+    //sprememba datuma naj pokaze specificno meritev
     $('#izberiDatum').change(function() {
         var tlak = $(this).val().split(';');
-        $('#meritev').html('<br>Diastolični krvni tlak: '+tlak[0]+
-                           '<br>Sistolični krvni tlak: '+tlak[1]);
+        $('#meritev').html('<br>Diastolični krvni tlak: '+tlak[0]+' mm Hg'+
+                           '<br>Sistolični krvni tlak: '+tlak[1]+' mm Hg');
     });
 
 });
