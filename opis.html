@@ -69,8 +69,7 @@
             </p>
             <p>Gre za statično vsebino. Nasveti za izboljšanje stanja krvnega tlaka so bili ročno strukturirani
                v dve .csv datoteki (zunanji_vir/previsok.csv in zunanji_vir/prenizek.csv) iz katerih nam aplikacija
-               (glede na stanje krvnega tlaka) podaja nasvete. V primeru idealnega krvnega tlaka nam nasveta sploh
-               ne poda.</p>
+               (glede na stanje krvnega tlaka) poda nasvet (v primeru idealnega tlaka nam nasveta ne poda).</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
@@ -80,7 +79,10 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
-            <p><strong>TO-DO</strong>: Na tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in na kakšen način ga nameravate uporabiti.</p>
+            <p>V razdelku 'Izberite datum za prikaz meritve' nam je na voljo seznam vseh meritev krvnega tlaka,
+               vsaka od meritev pa je poimenovana z datumom in časom izvedbe meritve. Ko izberemo želeno meritev,
+               se nam posodobita vrednosti diastoličnega in sistoličnega krvnega tlaka, tako da ustrezata meritvi,
+               ki je bila izvedena ob izbranemu datumu in času.</p>
             <!-- KONEC: Master/detail načrtovalski vzorec -->
           </div>
         </div>
@@ -90,7 +92,9 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno navesti uporabljeno tehniko vizualizacije podatkov (za pomoč lahko uporabite primer iz <a href="https://github.com/mbostock/d3/wiki/Gallery" target="_blank">D3.js galerije</a>) in zakaj je bila ta tehnika izbrana.</p>
+            <p>Za vizualizacijo podatkov se uporablja Googlovo orodje za pripravo grafov. Aplikacija prikaže graf
+               na katerem je vidnih zadnjih 5 meritev krvnega tlaka. Ozadje grafa je tako pripravljeno, da se že
+               iz barve območja hitro razbere stanje našega tlaka.</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
