@@ -45,7 +45,13 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Opis ideje, ki jo aplikacija podpira -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno dodati <strong>osnovni opis ideje rešitve</strong> (kakšen je osnovni SCENARIJ UPORABE, KDO je ciljna publika, za kakšen NAMEN se aplikacija uporablja).</p><p class="text-muted">Opis naj ne bo daljši od 200 besed.</p>
+            <p>Aplikacija 'Stanje krvnega tlaka' nam za dan EHR ID ponuja vpogled v vse meritve krvnega tlaka.
+               Zadnjih 5 meritev se izriše na grafu, kjer lahko glede na različno obarvana območja ocenimo stanje
+               krvnega tlaka, poleg tega pa se za te meritve izračuna tudi povprečna vrednost, na podlagi katere
+               nam aplikacija pove kakšen je naš krvni tlak. V primeru, ko krvni tlak ni idealen, nam aplikacija
+               ponudi tudi nasvet (iz zunanjih virov), kako stanje izboljšati.
+               Spletna aplikacija je namenjena vsem, ki si želijo biti dobro seznanjeni s stanjem njihovega krvnega
+               tlaka in na ta način preprečiti vse težave, ki so povezane s previsokim oz. prenizkim krvnim tlakom.</p>
             <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
           </div>
         </div>
@@ -55,7 +61,16 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je navesti zunanji vir podatkov (URL naslov), na kakšen način ste ga uporabili (neposredni API klic, uvožena statična datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno idejo aplikacije).</p>
+            <p>Spletna aplikacija uporablja dva zunanja vira podatkov:</p>
+            <p>
+            <a href="http://www.aktivni.si/zdravje/15-preprostih-metod-za-idealni-krvni-tlak">http://www.aktivni.si/zdravje/15-preprostih-metod-za-idealni-krvni-tlak</a>
+            in
+            <a href="http://www.bodieko.si/kako-na-naraven-nacin-zvisati-nizek-krvni-pritisk">http://www.bodieko.si/kako-na-naraven-nacin-zvisati-nizek-krvni-pritisk</a>
+            </p>
+            <p>Gre za statično vsebino. Nasveti za izboljšanje stanja krvnega tlaka so bili ročno strukturirani
+               v dve .csv datoteki (zunanji_vir/previsok.csv in zunanji_vir/prenizek.csv) iz katerih nam aplikacija
+               (glede na stanje krvnega tlaka) podaja nasvete. V primeru idealnega krvnega tlaka nam nasveta sploh
+               ne poda.</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
